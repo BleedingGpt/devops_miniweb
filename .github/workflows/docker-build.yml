@@ -1,24 +1,36 @@
-name: build and push docker Image
+name: Backend CI/CD
 
 on: 
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/docker-build.yml'
 
 jobs:
-    docker:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Repo
-              uses: actions/checkout@v3
-            
-            - name: build docker image
-              run:  docker build -t devops-backend ./backend
-            
-            - name: build docker container
-              run: |
-                docker rm -fdevops-backend || true
-                docker run -d --name devops-backend -p 5000:5000 devops-backend
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-           
-            
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: docker build -t devops-backend ./backend
+
+      - name: Remove old container if exists
+        run: docker rm -f devops-backend || true
+
+      - name: Run Docker container
+        run: docker run -d --name devops-backend -p 5000:5000 devops-backend
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.35.0'
+
+      - name: Update Kubernetes pod
+        run: kubectl set image pod/devops-backend-pod devops-backend=devops-backend:latest --record
