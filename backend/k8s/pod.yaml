@@ -1,0 +1,11 @@
+apiVersion: v1
+
+kind: Pod
+metadata:
+  name: devops-backend-pod
+  labels:
+    app: devops-backend
+specs:
+  containers:
+    - name: devops-backend
+      image: 

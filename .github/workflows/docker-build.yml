@@ -1,0 +1,24 @@
+name: build and push docker Image
+
+on: 
+    push:
+        branches:
+            - main
+
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v3
+            
+            - name: build docker image
+              run:  docker build -t devops-backend ./backend
+            
+            - name: build docker container
+              run: |
+                docker rm -fdevops-backend || true
+                docker run -d --name devops-backend -p 5000:5000 devops-backend
+
+           
+            
