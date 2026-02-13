@@ -5,12 +5,12 @@ metadata:
   name: devops-backend-pod
   labels:
     app: devops-backend
-specs:
+spec:
   containers:
     - name: devops-backend
       image: devops-backend:latest
       imagePullPolicy: Never
       ports:
-        -containerPort: 5000
+        - containerPort: 5000
     
 
