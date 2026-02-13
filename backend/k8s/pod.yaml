@@ -8,4 +8,9 @@ metadata:
 specs:
   containers:
     - name: devops-backend
-      image: 
+      image: devops-backend:latest
+      imagePullPolicy: Never
+      ports:
+        -containerPort: 5000
+    
+
