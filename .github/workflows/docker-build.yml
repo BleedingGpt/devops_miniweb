@@ -27,6 +27,9 @@ jobs:
       - name: Run Docker container
         run: docker run -d --name devops-backend -p 5000:5000 devops-backend
 
-
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.35.0'
 
 
