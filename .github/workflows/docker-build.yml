@@ -32,5 +32,4 @@ jobs:
         with:
           version: 'v1.35.0'
 
-      - name: Update Kubernetes pod
-        run: kubectl set image pod/devops-backend-pod devops-backend=devops-backend:latest --record
+
